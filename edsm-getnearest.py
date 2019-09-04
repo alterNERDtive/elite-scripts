@@ -94,14 +94,14 @@ def outputText():
     exit(1)
   nearestCmdr = min(distances,key=distances.get)
   if shortOutput:
-    print('nearest CMDR: {} ({} ly)'.format(nearestCmdr, 
+    print('nearest CMDR: {} ({} ly)'.format(nearestCmdr, 
       distances[nearestCmdr]))
   else:
-    print('nearest CMDR: {} ({} ly from {})'.format(nearestCmdr, 
+    print('nearest CMDR: {} ({} ly from {})'.format(nearestCmdr, 
       distances[nearestCmdr], system))
     print()
     for cmdr in distances:
-      print('{}: {} ly'.format(cmdr, distances[cmdr]))
+      print('{}: {} ly'.format(cmdr, distances[cmdr]))
 
 # =================================================================================
 
@@ -119,7 +119,7 @@ group.add_argument('--text', action='store_true', help='explicitly give text out
 
 args = parser.parse_args()
 
-system = args.system[0]
+system = args.system[0].strip()
 cmdrs = args.cmdrs
 shortOutput = args.short
 
