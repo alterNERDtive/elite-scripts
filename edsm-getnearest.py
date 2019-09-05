@@ -119,7 +119,7 @@ group.add_argument('--text', action='store_true', help='explicitly give text out
 
 args = parser.parse_args()
 
-system = args.system[0].strip()
+system = args.system[0].strip().replace(' ', '').replace('', '')
 cmdrs = args.cmdrs
 shortOutput = args.short
 
