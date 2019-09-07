@@ -94,7 +94,7 @@ def outputText():
     exit(1)
   nearestCmdr = min(distances,key=distances.get)
   if shortOutput:
-    print('nearest CMDR: {} ({} ly)'.format(nearestCmdr, 
+    print('nearest commander: {} ({} ly)'.format(nearestCmdr, 
       distances[nearestCmdr]))
   else:
     print('nearest CMDR: {} ({} ly from {})'.format(nearestCmdr, 
