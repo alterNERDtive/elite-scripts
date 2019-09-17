@@ -1,4 +1,4 @@
-# A collection fo useful scripts around Elite Dangerous #
+# A collection of useful scripts around Elite Dangerous #
 
 ## edsm-getnearest.py ##
 
