@@ -8,6 +8,10 @@ import tkinter as tk
 from pyEDSM.edsm.exception import ServerError, NotFoundError
 from pyEDSM.edsm.models import System, Commander
 
+class EdsmApiException(Exception):
+  pass
+
+
 # =================================================================================
 
 def getCmdrCoords (cmdr):
