@@ -1,5 +1,5 @@
-all:
+all: exe
 
+# requires a windows box
 exe:
-	# requires a windows box
-	pyinstaller.exe edsm-getnearest.py
+	pyinstaller.exe -y edsm-getnearest.py
