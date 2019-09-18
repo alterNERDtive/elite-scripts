@@ -83,7 +83,7 @@ def outputGui():
 def outputText():
   try:
     distances = getDistances(system, cmdrs)
-  except (ServerError, NotFoundErorr) as e:
+  except (ServerError, NotFoundError) as e:
     print(e)
     exit(1)
   nearestCmdr = min(distances,key=distances.get)
