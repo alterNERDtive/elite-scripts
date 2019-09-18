@@ -5,20 +5,10 @@ import requests
 import sys
 import tkinter as tk
 
+from pyEDSM.edsm.exception import ServerError, NotFoundError
+from pyEDSM.edsm.models import System, Commander
+
 # =================================================================================
-
-class EdsmApiException(Exception):
-  pass
-
-def getSystemCoords (system):
-  resp = requests.get('https://www.edsm.net/api-v1/system?systemName={}&showCoordinates=1'.format(system))
-  if resp.status_code != 200:
-    raise EdsmApiException('GET /system/ {}'.format(resp.status_code))
-  try:
-    ret = resp.json()['coords']
-  except TypeError:
-    raise EdsmApiException('System coordinates for {} not found!'.format(system))
-  return ret
 
 def getCmdrCoords (cmdr):
   resp = requests.get('https://www.edsm.net/api-logs-v1/get-position?commanderName={}&showCoordinates=1'.format(cmdr))
@@ -31,12 +21,12 @@ def getCmdrCoords (cmdr):
   return ret
 
 def distance (coords1, coords2):
-  return math.sqrt( (coords1['x']-coords2['x'])**2 
+  return math.sqrt( (coords1['x']-coords2['x'])**2
       + (coords1['y']-coords2['y'])**2
       + (coords1['z']-coords2['z'])**2 )
 
 def getDistances (system, cmdrs):
-  systemcoords = getSystemCoords(system)
+  systemcoords = System(system).coords
   distances = {}
   for cmdr in cmdrs:
     cmdrcoords = getCmdrCoords(cmdr)
@@ -64,7 +54,7 @@ def outputGui():
         lbl.grid(row=row, column=0)
         lbl = tk.Label(frame, text='{} ly'.format(distances[cmdr]))
         lbl.grid(row=row, column=1)
-    except EdsmApiException as e:
+    except (ServerError, NotFoundError) as e:
       lbl = tk.Label(frame, text=e)
       lbl.grid(row=0, columnspan=2)
   window = tk.Tk()
@@ -89,15 +79,15 @@ def outputGui():
 def outputText():
   try:
     distances = getDistances(system, cmdrs)
-  except EdsmApiException as e:
+  except (ServerError, NotFoundErorr) as e:
     print(e)
     exit(1)
   nearestCmdr = min(distances,key=distances.get)
   if shortOutput:
-    print('nearest commander: {} ({} ly).'.format(nearestCmdr, 
+    print('nearest commander: {} ({} ly).'.format(nearestCmdr,
       distances[nearestCmdr]))
   else:
-    print('nearest CMDR: {} ({} ly from {}).'.format(nearestCmdr, 
+    print('nearest CMDR: {} ({} ly from {}).'.format(nearestCmdr,
       distances[nearestCmdr], system))
     print()
     for cmdr in distances:

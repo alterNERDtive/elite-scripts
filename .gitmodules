@@ -1,0 +1,3 @@
+[submodule "pyEDSM"]
+	path = pyEDSM
+	url = https://github.com/alterNERDtive/pyEDSM
