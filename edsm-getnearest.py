@@ -61,6 +61,9 @@ def outputGui():
     except (ServerError, NotFoundError) as e:
       lbl = tk.Label(frame, text=e)
       lbl.grid(row=0, columnspan=2)
+    except EdsmApiException as e:
+      lbl = tk.Label(frame, text=e)
+      lbl.grid(row=0, columnspan=2)
   window = tk.Tk()
   window.title('EDSM nearest CMDR')
   lbl = tk.Label(window, text='system:')
@@ -84,6 +87,9 @@ def outputText():
   try:
     distances = getDistances(system, cmdrs)
   except (ServerError, NotFoundError) as e:
+    print(e)
+    exit(1)
+  except EdsmApiException as e:
     print(e)
     exit(1)
   nearestCmdr = min(distances,key=distances.get)
