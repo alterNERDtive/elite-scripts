@@ -23,25 +23,39 @@ optional arguments:
 ## explorationtools.py ##
 
 ```
-usage: explorationtools.py [-h] {bodycount} ...
+usage: explorationtools.py [-h] {bodycount,distancebetween} ...
 
 A collection of tools useful for exploration.
 
 optional arguments:
-  -h, --help   show this help message and exit
+  -h, --help            show this help message and exit
 
 subcommands:
-  {bodycount}  sub-command help
-    bodycount  Returns the number of bodies in a system. Will exit with code 1
-               on server error and code 2 if the system could not be found in
-               EDSM.
+  {bodycount,distancebetween}
+                        sub-command help
+    bodycount           Returns the number of bodies in a system. Will exit
+                        with code 1 on server error and code 2 if the system
+                        could not be found in EDSM.
+    distancebetween     Calculates the distance between two systems. Will exti
+                        with code 1 on server error and code 2 if (one of) the
+						systems could not be found on EDSM.
 ```
 
 ```
 usage: explorationtools.py bodycount [-h] system
 
 positional arguments:
-  system      the system in question
+  system
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+```
+usage: explorationtools.py distancebetween [-h] system system
+
+positional arguments:
+  system
 
 optional arguments:
   -h, --help  show this help message and exit
