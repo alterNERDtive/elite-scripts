@@ -58,7 +58,7 @@ def outputGui():
         lbl.grid(row=row, column=0)
         lbl = tk.Label(frame, text='{} ly'.format(distances[cmdr]))
         lbl.grid(row=row, column=1)
-    except (ServerError, NotFoundError) as e:
+    except (ServerError, SystemNotFoundError) as e:
       lbl = tk.Label(frame, text=e)
       lbl.grid(row=0, columnspan=2)
     except EdsmApiException as e:
@@ -88,13 +88,13 @@ def outputText():
     distances = getDistances(system, cmdrs)
   except ServerError as e:
     print(e)
-    exit(1)
+    sys.exit(1)
   except SystemNotFoundError as e:
     print(e)
-    exit(2)
+    sys.exit(2)
   except EdsmApiException as e:
     print(e)
-    exit(1)
+    sys.exit(1)
   nearestCmdr = min(distances,key=distances.get)
   if shortOutput:
     print('nearest commander: {} ({} ly).'.format(nearestCmdr,
@@ -105,6 +105,7 @@ def outputText():
     print()
     for cmdr in distances:
       print('{}: {} ly'.format(cmdr, distances[cmdr]))
+    sys.exit(0)
 
 # =================================================================================
 
