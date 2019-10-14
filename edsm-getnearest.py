@@ -5,7 +5,7 @@ import requests
 import sys
 import tkinter as tk
 
-from pyEDSM.edsm.exception import ServerError, NotFoundError
+from pyEDSM.edsm.exception import ServerError, SystemNotFoundError
 from pyEDSM.edsm.models import System, Commander
 
 class EdsmApiException(Exception):
@@ -86,9 +86,12 @@ def outputGui():
 def outputText():
   try:
     distances = getDistances(system, cmdrs)
-  except (ServerError, NotFoundError) as e:
+  except ServerError as e:
     print(e)
     exit(1)
+  except SystemNotFoundError as e:
+    print(e)
+    exit(2)
   except EdsmApiException as e:
     print(e)
     exit(1)
