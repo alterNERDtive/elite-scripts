@@ -45,7 +45,8 @@ def outputGui():
       child.grid_remove()
       child.destroy()
     try:
-      distances = getDistances(systemField.get(), cmdrs)
+      system = systemField.get()
+      distances = getDistances(system, cmdrs)
       nearestCmdr = min(distances,key=distances.get)
       lbl = tk.Label(
           frame, text='nearest CMDR: {} ({} ly from {})'.format(nearestCmdr,
