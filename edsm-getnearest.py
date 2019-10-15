@@ -78,7 +78,6 @@ def outputGui():
   btn = tk.Button(window, text='get distances', command=runsearch)
   btn.grid(row=0, column=2)
   window.bind('<Return>', runsearch)
-  window.attributes('-topmost', True)
   runsearch()
   window.mainloop()
 
