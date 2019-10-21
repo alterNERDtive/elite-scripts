@@ -50,7 +50,7 @@ parser_bodycount = subparsers.add_parser("bodycount",
 parser_bodycount.add_argument("system", nargs=1)
 
 parser_distance = subparsers.add_parser("distancebetween",
-    help="Calculates the distance between two systems. Will exti with code 1 "
+    help="Calculates the distance between two systems. Will exit with code 1 "
     + "on server error and code 2 if (one of) the systems could not be found "
     + "on EDSM.")
 parser_distance.add_argument("system", nargs=2)
