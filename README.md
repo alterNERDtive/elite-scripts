@@ -1,5 +1,22 @@
 # A collection of useful scripts around Elite Dangerous #
 
+## preparations for usage
+
+after you have cloned this repository, you need to run
+
+```
+git submodule init
+git submodule update
+```
+
+and if for some reason you get back to the existing local copy in a while, you may want to run
+
+```
+git submodule update --remote
+```
+
+to make sure the submodule(s) have been updated to the latest code
+
 ## edsm-getnearest.py ##
 
 ```
