@@ -36,9 +36,9 @@ subcommands:
     bodycount           Returns the number of bodies in a system. Will exit
                         with code 1 on server error and code 2 if the system
                         could not be found in EDSM.
-	distancebetween     Calculates the distance between two systems. Will exit
+    distancebetween     Calculates the distance between two systems. Will exit
                         with code 1 on server error and code 2 if (one of) the
-						systems could not be found on EDSM.
+                        systems could not be found on EDSM.
 ```
 
 ```
