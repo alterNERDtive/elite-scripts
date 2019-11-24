@@ -5,24 +5,10 @@ import requests
 import sys
 import tkinter as tk
 
-from pyEDSM.edsm.exception import ServerError, SystemNotFoundError
-from pyEDSM.edsm.models import System, Commander
-
-class EdsmApiException(Exception):
-  pass
-
+from pyEDSM.edsm.exception import CommanderNotFoundError, ServerError, SystemNotFoundError
+from pyEDSM.edsm.models import Commander, System
 
 # =================================================================================
-
-def getCmdrCoords (cmdr):
-  resp = requests.get('https://www.edsm.net/api-logs-v1/get-position?commanderName={}&showCoordinates=1'.format(cmdr))
-  if resp.status_code != 200:
-    raise EdsmApiException('GET /get-position/ {}'.format(resp.status_code))
-  try:
-    ret = resp.json()['coordinates']
-  except KeyError:
-    raise EdsmApiException('Coordinates for CMDR {} not found!'.format(cmdr))
-  return ret
 
 def distance (coords1, coords2):
   return math.sqrt( (coords1['x']-coords2['x'])**2
@@ -30,11 +16,9 @@ def distance (coords1, coords2):
       + (coords1['z']-coords2['z'])**2 )
 
 def getDistances (system, cmdrs):
-  systemcoords = System(system).coords
   distances = {}
   for cmdr in cmdrs:
-    cmdrcoords = getCmdrCoords(cmdr)
-    distances[cmdr] = round(distance(cmdrcoords, systemcoords))
+    distances[cmdr] = round(distance(cmdr.currentPosition, system.coords))
   return distances
 
 # =================================================================================
@@ -45,17 +29,17 @@ def outputGui():
       child.grid_remove()
       child.destroy()
     try:
-      system = systemField.get()
+      system = System(systemField.get())
       distances = getDistances(system, cmdrs)
       nearestCmdr = min(distances,key=distances.get)
       lbl = tk.Label(
-          frame, text='nearest CMDR: {} ({} ly from {})'.format(nearestCmdr,
-            distances[nearestCmdr], system))
+          frame, text='nearest CMDR: {} ({} ly from {})'.format(nearestCmdr.name,
+            distances[nearestCmdr], system.name))
       lbl.grid(row=0, columnspan=2)
       row = 1
       for cmdr in distances:
         row += 1
-        lbl = tk.Label(frame, text='{}:'.format(cmdr))
+        lbl = tk.Label(frame, text='{}:'.format(cmdr.name))
         lbl.grid(row=row, column=0)
         lbl = tk.Label(frame, text='{} ly'.format(distances[cmdr]))
         lbl.grid(row=row, column=1)
@@ -71,7 +55,7 @@ def outputGui():
   lbl.grid(row=0, column=0)
   systemField = tk.Entry(window, width=50)
   systemField.grid(row=0, column=1)
-  systemField.insert(tk.END, system)
+  systemField.insert(tk.END, system.name)
   systemField.focus()
   frame = tk.Frame(window)
   frame.grid(row=1, columnspan=3)
@@ -86,6 +70,9 @@ def outputGui():
 def outputText():
   try:
     distances = getDistances(system, cmdrs)
+  except CommanderNotFoundError as e:
+    print(e)
+    sys.exit(1)
   except ServerError as e:
     print(e)
     sys.exit(1)
@@ -97,14 +84,14 @@ def outputText():
     sys.exit(1)
   nearestCmdr = min(distances,key=distances.get)
   if shortOutput:
-    print('nearest commander: {} ({} ly).'.format(nearestCmdr,
+    print('nearest commander: {} ({} ly).'.format(nearestCmdr.name,
       distances[nearestCmdr]))
   else:
-    print('nearest CMDR: {} ({} ly from {}).'.format(nearestCmdr,
-      distances[nearestCmdr], system))
+    print('nearest CMDR: {} ({} ly from {}).'.format(nearestCmdr.name,
+      distances[nearestCmdr], system.name))
     print()
     for cmdr in distances:
-      print('{}: {} ly'.format(cmdr, distances[cmdr]))
+      print('{}: {} ly'.format(cmdr.name, distances[cmdr]))
     sys.exit(0)
 
 # =================================================================================
@@ -123,8 +110,10 @@ group.add_argument('--text', action='store_true', help='explicitly give text out
 
 args = parser.parse_args()
 
-system = args.system[0].strip().replace(' ', '').replace('', '')
-cmdrs = args.cmdrs
+system = System(args.system[0].strip().replace(' ', '').replace('', ''))
+cmdrs = []
+for name in args.cmdrs:
+  cmdrs += [Commander(name)]
 shortOutput = args.short
 
 # =================================================================================
