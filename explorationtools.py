@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import argparse
+# PYTHON_ARGCOMPLETE_OK
+import argcomplete, argparse
 import math
 import sys
 
@@ -55,6 +56,7 @@ parser_distance = subparsers.add_parser("distancebetween",
     + "on EDSM.")
 parser_distance.add_argument("system", nargs=2)
 
+argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
 # ===========================================================================
