@@ -9,19 +9,6 @@ from pyEDSM.edsm.models import System, Commander
 
 # ===========================================================================
 
-def getBodyCount(system):
-  try:
-    bodyCount = System(system).bodyCount
-  except ServerError as e:
-    print(e)
-    sys.exit(1)
-  except NotFoundError as e:
-    print(e)
-    sys.exit(2)
-  else:
-    print(bodyCount)
-    sys.exit(0)
-
 def distanceBetween(system1, system2):
   try:
     coords1 = System(system1).coords
@@ -34,8 +21,21 @@ def distanceBetween(system1, system2):
     syst.exit(2)
   else:
     print(int(round(math.sqrt( (coords1['x']-coords2['x'])**2
-        + (coords1['y']-coords2['y'])**2
-        + (coords1['z']-coords2['z'])**2 ),0)))
+      + (coords1['y']-coords2['y'])**2
+      + (coords1['z']-coords2['z'])**2 ),0)))
+    sys.exit(0)
+
+def getBodyCount(system):
+  try:
+    bodyCount = System(system).bodyCount
+  except ServerError as e:
+    print(e)
+    sys.exit(1)
+  except NotFoundError as e:
+    print(e)
+    sys.exit(2)
+  else:
+    print(bodyCount)
     sys.exit(0)
 
 # ===========================================================================
