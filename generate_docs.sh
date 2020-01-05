@@ -6,9 +6,7 @@ cat > README.md << EOF
 
 \`\`\`
 EOF
-
 ./edsm-getnearest.py -h >> README.md
-
 cat >> README.md << EOF
 \`\`\`
 
@@ -16,25 +14,18 @@ cat >> README.md << EOF
 
 \`\`\`
 EOF
-
 ./explorationtools.py -h >> README.md
-
-
 cat >> README.md << EOF
 \`\`\`
 
 \`\`\`
 EOF
-
 ./explorationtools.py bodycount -h >> README.md
-
-
 cat >> README.md << EOF
 \`\`\`
 
 \`\`\`
 EOF
-
 ./explorationtools.py distancebetween -h >> README.md
 
 
