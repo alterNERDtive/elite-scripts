@@ -27,8 +27,12 @@ cat >> README.md << EOF
 \`\`\`
 EOF
 ./explorationtools.py distancebetween -h >> README.md
+cat >> README.md << EOF
+\`\`\`
 
-
+\`\`\`
+EOF
+./explorationtools.py findCommander -h >> README.md
 cat >> README.md << EOF
 \`\`\`
 EOF
