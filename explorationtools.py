@@ -32,18 +32,18 @@ subparsers = parser.add_subparsers(title="subcommands", help="sub-command help",
 parser_bodycount = subparsers.add_parser("bodycount",
     help="Returns the number of bodies in a system. Will exit with code 1 on "
     + "server error and code 2 if the system could not be found in EDSM.")
-parser_bodycount.add_argument("system", nargs=1)
+parser_bodycount.add_argument("system", nargs=1, help="system to query")
 
 parser_distance = subparsers.add_parser("distancebetween",
     help="Calculates the distance between two systems. Will exit with code 1 "
     + "on server error and code 2 if (one of) the systems could not be found "
     + "on EDSM.")
-parser_distance.add_argument("system", nargs=2)
+parser_distance.add_argument("system", nargs=2, help="the systems to measure")
 
 parser_find = subparsers.add_parser("findcommander",
     help="Attempts to find a CMDR’s last known position. Will exit with code 1 "
     + "on server error and code 2 if the CMDR could not be found on EDSM.")
-parser_find.add_argument("name")
+parser_find.add_argument("name", help="the commander in question")
 parser_find.add_argument("apikey", default="", nargs="?",
     help="the commander’s EDSM API key. Can be empty for public profiles.")
 
