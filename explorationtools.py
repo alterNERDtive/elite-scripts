@@ -10,46 +10,17 @@ from pyEDSM.edsm.models import System, Commander
 # ===========================================================================
 
 def distanceBetween(system1, system2):
-  try:
-    coords1 = System(system1).coords
-    coords2 = System(system2).coords
-  except ServerError as e:
-    print(e)
-    sys.exit(1)
-  except NotFoundError as e:
-    print(e)
-    syst.exit(2)
-  else:
-    print(int(round(math.sqrt( (coords1['x']-coords2['x'])**2
+  coords1 = System(system1).coords
+  coords2 = System(system2).coords
+  return int(round(math.sqrt( (coords1['x']-coords2['x'])**2
       + (coords1['y']-coords2['y'])**2
-      + (coords1['z']-coords2['z'])**2 ),0)))
-    sys.exit(0)
+      + (coords1['z']-coords2['z'])**2 ),0))
 
 def findCommander(name):
-  try:
-    currentSystem = Commander(name).currentSystem
-  except ServerError as e:
-    print(e)
-    sys.exit(1)
-  except NotFoundError as e:
-    print(e)
-    sys.exit(2)
-  else:
-    print(currentSystem)
-    sys.exit(0)
+  return Commander(name).currentSystem
 
 def getBodyCount(system):
-  try:
-    bodyCount = System(system).bodyCount
-  except ServerError as e:
-    print(e)
-    sys.exit(1)
-  except NotFoundError as e:
-    print(e)
-    sys.exit(2)
-  else:
-    print(bodyCount)
-    sys.exit(0)
+  return System(system).bodyCount
 
 # ===========================================================================
 
@@ -69,7 +40,7 @@ parser_distance = subparsers.add_parser("distancebetween",
     + "on EDSM.")
 parser_distance.add_argument("system", nargs=2)
 
-parser_find = subparsers.add_parser("findCommander",
+parser_find = subparsers.add_parser("findcommander",
     help="Attempts to find a CMDR’s last known position. Will exit with code 1 "
     + "on server error and code 2 if the CMDR could not be found on EDSM.")
 parser_find.add_argument("name")
@@ -79,9 +50,19 @@ args = parser.parse_args()
 
 # ===========================================================================
 
-if args.subCommand == "bodycount":
-  getBodyCount(args.system[0])
-elif args.subCommand == "distancebetween":
-  distanceBetween(args.system[0], args.system[1])
-elif args.subCommand == "findCommander":
-  findCommander(args.name)
+try:
+  if args.subCommand == "bodycount":
+    out = getBodyCount(args.system[0])
+  elif args.subCommand == "distancebetween":
+    out = distanceBetween(args.system[0], args.system[1])
+  elif args.subCommand == "findcommander":
+    out = findCommander(args.name)
+except ServerError as e:
+  print(e)
+  sys.exit(1)
+except NotFoundError as e:
+  print(e)
+  sys.exit(2)
+else:
+  print(out)
+  sys.exit(0)
