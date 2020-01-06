@@ -23,7 +23,7 @@ optional arguments:
 ## explorationtools.py ##
 
 ```
-usage: explorationtools.py [-h] {bodycount,distancebetween,findCommander} ...
+usage: explorationtools.py [-h] {bodycount,distancebetween,findcommander} ...
 
 A collection of tools useful for exploration.
 
@@ -31,7 +31,7 @@ optional arguments:
   -h, --help            show this help message and exit
 
 subcommands:
-  {bodycount,distancebetween,findCommander}
+  {bodycount,distancebetween,findcommander}
                         sub-command help
     bodycount           Returns the number of bodies in a system. Will exit
                         with code 1 on server error and code 2 if the system
@@ -39,7 +39,7 @@ subcommands:
     distancebetween     Calculates the distance between two systems. Will exit
                         with code 1 on server error and code 2 if (one of) the
                         systems could not be found on EDSM.
-    findCommander       Attempts to find a CMDR’s last known position. Will
+    findcommander       Attempts to find a CMDR’s last known position. Will
                         exit with code 1 on server error and code 2 if the
                         CMDR could not be found on EDSM.
 ```
@@ -48,7 +48,7 @@ subcommands:
 usage: explorationtools.py bodycount [-h] system
 
 positional arguments:
-  system
+  system      system to query
 
 optional arguments:
   -h, --help  show this help message and exit
@@ -58,17 +58,18 @@ optional arguments:
 usage: explorationtools.py distancebetween [-h] system system
 
 positional arguments:
-  system
+  system      the systems to measure
 
 optional arguments:
   -h, --help  show this help message and exit
 ```
 
 ```
-usage: explorationtools.py findCommander [-h] name
+usage: explorationtools.py findcommander [-h] name [apikey]
 
 positional arguments:
-  name
+  name        the commander in question
+  apikey      the commander’s EDSM API key. Can be empty for public profiles.
 
 optional arguments:
   -h, --help  show this help message and exit

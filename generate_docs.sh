@@ -32,7 +32,7 @@ cat >> README.md << EOF
 
 \`\`\`
 EOF
-./explorationtools.py findCommander -h >> README.md
+./explorationtools.py findcommander -h >> README.md
 cat >> README.md << EOF
 \`\`\`
 EOF
