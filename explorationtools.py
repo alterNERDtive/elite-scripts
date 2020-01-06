@@ -16,8 +16,8 @@ def distanceBetween(system1, system2):
       + (coords1['y']-coords2['y'])**2
       + (coords1['z']-coords2['z'])**2 ),0))
 
-def findCommander(name):
-  return Commander(name).currentSystem
+def findCommander(name, apikey):
+  return Commander(name, apikey).currentSystem
 
 def getBodyCount(system):
   return System(system).bodyCount
@@ -44,6 +44,8 @@ parser_find = subparsers.add_parser("findcommander",
     help="Attempts to find a CMDR’s last known position. Will exit with code 1 "
     + "on server error and code 2 if the CMDR could not be found on EDSM.")
 parser_find.add_argument("name")
+parser_find.add_argument("apikey", default="", nargs="?",
+    help="the commander’s EDSM API key. Can be empty for public profiles.")
 
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
@@ -56,7 +58,7 @@ try:
   elif args.subCommand == "distancebetween":
     out = distanceBetween(args.system[0], args.system[1])
   elif args.subCommand == "findcommander":
-    out = findCommander(args.name)
+    out = findCommander(args.name, args.apikey)
 except ServerError as e:
   print(e)
   sys.exit(1)
