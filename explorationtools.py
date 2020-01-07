@@ -19,6 +19,9 @@ def distanceBetween(system1, system2):
 def findCommander(name, apikey):
   return Commander(name, apikey).currentSystem
 
+def getProfileUrl(name, apikey):
+  return Commander(name, apikey).profileUrl
+
 def getBodyCount(system):
   return System(system).bodyCount
 
@@ -43,6 +46,11 @@ parser_distance.add_argument("system", nargs=2, help="the systems to measure")
 parser_find = subparsers.add_parser("findcommander",
     help="Attempts to find a CMDR’s last known position. Will exit with code 1 "
     + "on server error and code 2 if the CMDR could not be found on EDSM.")
+group = parser_find.add_mutually_exclusive_group(required=False)
+group.add_argument('--system', action='store_true',
+    help='output the commander’s last known system (default)')
+group.add_argument('--url', action='store_true',
+    help='output the commander’s profile URL')
 parser_find.add_argument("name", help="the commander in question")
 parser_find.add_argument("apikey", default="", nargs="?",
     help="the commander’s EDSM API key. Can be empty for public profiles.")
@@ -58,7 +66,10 @@ try:
   elif args.subCommand == "distancebetween":
     out = distanceBetween(args.system[0], args.system[1])
   elif args.subCommand == "findcommander":
-    out = findCommander(args.name, args.apikey)
+    if args.url:
+      out = getProfileUrl(args.name, args.apikey)
+    else:
+      out = findCommander(args.name, args.apikey)
 except ServerError as e:
   print(e)
   sys.exit(1)
