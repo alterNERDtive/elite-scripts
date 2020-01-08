@@ -9,6 +9,9 @@ from pyEDSM.edsm.models import System, Commander
 
 # ===========================================================================
 
+def getBodyCount(system):
+  return System(system).bodyCount
+
 def distanceBetween(system1, system2):
   coords1 = System(system1).coords
   coords2 = System(system2).coords
@@ -16,14 +19,11 @@ def distanceBetween(system1, system2):
       + (coords1['y']-coords2['y'])**2
       + (coords1['z']-coords2['z'])**2 ),0))
 
-def findCommander(name, apikey):
-  return Commander(name, apikey).currentSystem
-
-def getProfileUrl(name, apikey):
+def getCommanderProfileUrl(name, apikey):
   return Commander(name, apikey).profileUrl
 
-def getBodyCount(system):
-  return System(system).bodyCount
+def getCommanderSystem(name, apikey):
+  return Commander(name, apikey).currentSystem
 
 # ===========================================================================
 
@@ -67,9 +67,9 @@ try:
     out = distanceBetween(args.system[0], args.system[1])
   elif args.subCommand == "findcommander":
     if args.url:
-      out = getProfileUrl(args.name, args.apikey)
+      out = getCommanderProfileUrl(args.name, args.apikey)
     else:
-      out = findCommander(args.name, args.apikey)
+      out = getCommanderSystem(args.name, args.apikey)
 except ServerError as e:
   print(e)
   sys.exit(1)
