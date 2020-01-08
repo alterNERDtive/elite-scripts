@@ -20,7 +20,11 @@ def distanceBetween(system1, system2):
       + (coords1['z']-coords2['z'])**2 ),0))
 
 def getCommanderPosition(name, apikey):
-  return Commander(name, apikey).currentPosition
+  coords = Commander(name, apikey).currentPosition
+  ret = ""
+  for k in coords:
+    ret += "{}: {}, ".format(k, coords[k])
+  return ret[:-2]
 
 def getCommanderProfileUrl(name, apikey):
   return Commander(name, apikey).profileUrl
@@ -72,11 +76,7 @@ try:
     out = distanceBetween(args.system[0], args.system[1])
   elif args.subCommand == "findcommander":
     if args.coords:
-      coords = getCommanderPosition(args.name, args.apikey)
-      out = ""
-      for k in coords:
-        out += "{}: {}, ".format(k, coords[k])
-      out = out[:-2]
+      out = getCommanderPosition(args.name, args.apikey)
     elif args.url:
       out = getCommanderProfileUrl(args.name, args.apikey)
     else:
