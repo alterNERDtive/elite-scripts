@@ -34,7 +34,9 @@ optional arguments:
 ## explorationtools.py ##
 
 ```
-usage: explorationtools.py [-h] {bodycount,distancebetween,findcommander} ...
+usage: explorationtools.py [-h]
+                           {bodycount,distancebetween,findcommander,systemlist}
+                           ...
 
 A collection of tools useful for exploration.
 
@@ -42,7 +44,7 @@ optional arguments:
   -h, --help            show this help message and exit
 
 subcommands:
-  {bodycount,distancebetween,findcommander}
+  {bodycount,distancebetween,findcommander,systemlist}
                         sub-command help
     bodycount           Returns the number of bodies in a system. Will exit
                         with code 1 on server error and code 2 if the system
@@ -53,6 +55,8 @@ subcommands:
     findcommander       Attempts to find a CMDR’s last known position. Will
                         exit with code 1 on server error and code 2 if the
                         CMDR could not be found on EDSM.
+    systemlist          Pulls all system names starting with the given string
+                        from EDSM
 ```
 
 ```
@@ -89,6 +93,16 @@ optional arguments:
   --coords    output the commander’s last known position in {x,y,z}
               coordinates
   --url       output the commander’s profile URL
+```
+
+```
+usage: explorationtools.py systemlist [-h] partialsystem
+
+positional arguments:
+  partialsystem  the partial system name to query against
+
+optional arguments:
+  -h, --help     show this help message and exit
 ```
 
 ## Need Help / Want to Contribute? ##

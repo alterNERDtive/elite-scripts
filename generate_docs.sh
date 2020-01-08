@@ -47,6 +47,12 @@ EOF
 cat >> README.md << EOF
 \`\`\`
 
+\`\`\`
+EOF
+./explorationtools.py systemlist -h >> README.md
+cat >> README.md << EOF
+\`\`\`
+
 ## Need Help / Want to Contribute? ##
 
 Just [file an issue](https://github.com/alterNERDtive/elite-scripts/issues/new)

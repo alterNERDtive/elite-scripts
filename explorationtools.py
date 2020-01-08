@@ -29,6 +29,15 @@ def getCommanderProfileUrl(name, apikey):
 def getCommanderSystem(name, apikey):
   return Commander(name, apikey).currentSystem
 
+def getSystemList(name):
+  ret = ""
+
+  systems = System.getSystems(name)
+  for system in systems:
+    ret += "{}\n".format(system.name)
+
+  return ret[:-1]
+
 # ===========================================================================
 
 parser = argparse.ArgumentParser(description="A collection of tools useful for "
@@ -61,6 +70,11 @@ parser_find.add_argument("name", help="the commander in question")
 parser_find.add_argument("apikey", default="", nargs="?",
     help="the commander’s EDSM API key. Can be empty for public profiles.")
 
+parser_bodycount = subparsers.add_parser("systemlist",
+    help="Pulls all system names starting with the given string from EDSM")
+parser_bodycount.add_argument("partialsystem", nargs=1,
+    help="the partial system name to query against")
+
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
@@ -78,6 +92,8 @@ try:
       out = getCommanderProfileUrl(args.name, args.apikey)
     else:
       out = getCommanderSystem(args.name, args.apikey)
+  elif args.subCommand == "systemlist":
+    out = getSystemList(args.partialsystem)
 except ServerError as e:
   print(e)
   sys.exit(1)
