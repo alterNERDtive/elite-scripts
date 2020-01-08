@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import argparse
+# PYTHON_ARGCOMPLETE_OK
+import argcomplete, argparse
 import math
 import sys
 
@@ -54,6 +55,7 @@ parser_find.add_argument("name", help="the commander in question")
 parser_find.add_argument("apikey", default="", nargs="?",
     help="the commander’s EDSM API key. Can be empty for public profiles.")
 
+argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
 # ===========================================================================
