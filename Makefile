@@ -1,5 +1,10 @@
 all: docs
 
+zipfile = elite-scripts.zip
+
+clean:
+	rm -f $(zipfile)
+
 docs:
 	bash generate_docs.sh
 
@@ -7,3 +12,7 @@ docs:
 exe:
 	pyinstaller.exe -y edsm-getnearest.py
 	pyinstaller.exe -y explorationtools.py
+
+release: clean
+	rsync -avz gezocks:/mnt/d/git/elite-scripts/dist/ build/
+	cd build && zip -r ../$(zipfile) *
