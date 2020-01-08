@@ -10,15 +10,10 @@ from pyEDSM.edsm.models import Commander, System
 
 # =================================================================================
 
-def distance (coords1, coords2):
-  return math.sqrt( (coords1['x']-coords2['x'])**2
-      + (coords1['y']-coords2['y'])**2
-      + (coords1['z']-coords2['z'])**2 )
-
-def getDistances (system, cmdrs):
+def getDistances (system, cmdrs, roundTo=2):
   distances = {}
   for cmdr in cmdrs:
-    distances[cmdr] = round(distance(cmdr.currentPosition, system.coords))
+    distances[cmdr] = system.distanceTo(cmdr, roundTo=roundTo)
   return distances
 
 # =================================================================================
@@ -68,8 +63,12 @@ def outputGui():
 # =================================================================================
 
 def outputText():
+  if shortOutput:
+    roundTo=0
+  else:
+    roundTo=2
   try:
-    distances = getDistances(system, cmdrs)
+    distances = getDistances(system, cmdrs, roundTo=roundTo)
   except CommanderNotFoundError as e:
     print(e)
     sys.exit(1)
@@ -85,7 +84,7 @@ def outputText():
   nearestCmdr = min(distances,key=distances.get)
   if shortOutput:
     print('nearest commander: {} ({} ly).'.format(nearestCmdr.name,
-      distances[nearestCmdr]))
+      int(distances[nearestCmdr])))
   else:
     print('nearest CMDR: {} ({} ly from {}).'.format(nearestCmdr.name,
       distances[nearestCmdr], system.name))
