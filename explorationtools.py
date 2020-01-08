@@ -19,6 +19,13 @@ def distanceBetween(system1, system2):
       + (coords1['y']-coords2['y'])**2
       + (coords1['z']-coords2['z'])**2 ),0))
 
+def getCommanderPosition(name, apikey):
+  coords = Commander(name, apikey).currentPosition
+  ret = ""
+  for k in coords:
+    ret += "{}: {}, ".format(k, coords[k])
+  return ret[:-2]
+
 def getCommanderProfileUrl(name, apikey):
   return Commander(name, apikey).profileUrl
 
@@ -49,6 +56,8 @@ parser_find = subparsers.add_parser("findcommander",
 group = parser_find.add_mutually_exclusive_group(required=False)
 group.add_argument('--system', action='store_true',
     help='output the commander’s last known system (default)')
+group.add_argument('--coords', action='store_true',
+    help='output the commander’s last known position in {x,y,z} coordinates')
 group.add_argument('--url', action='store_true',
     help='output the commander’s profile URL')
 parser_find.add_argument("name", help="the commander in question")
@@ -66,7 +75,9 @@ try:
   elif args.subCommand == "distancebetween":
     out = distanceBetween(args.system[0], args.system[1])
   elif args.subCommand == "findcommander":
-    if args.url:
+    if args.coords:
+      out = getCommanderPosition(args.name, args.apikey)
+    elif args.url:
       out = getCommanderProfileUrl(args.name, args.apikey)
     else:
       out = getCommanderSystem(args.name, args.apikey)

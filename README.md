@@ -76,7 +76,8 @@ optional arguments:
 ```
 
 ```
-usage: explorationtools.py findcommander [-h] [--system | --url] name [apikey]
+usage: explorationtools.py findcommander [-h] [--system | --coords | --url]
+                                         name [apikey]
 
 positional arguments:
   name        the commander in question
@@ -85,6 +86,8 @@ positional arguments:
 optional arguments:
   -h, --help  show this help message and exit
   --system    output the commander’s last known system (default)
+  --coords    output the commander’s last known position in {x,y,z}
+              coordinates
   --url       output the commander’s profile URL
 ```
 
