@@ -11,7 +11,18 @@ You probably want to install your distribution/OS package for Tkinter instead of
 using pip. Then do the good old `pip install --user -r requirements.txt` or
 `pip3 install --user -r requirements.txt`.
 
-## edsm-getnearest.py ##
+## Pre-Compiled Version (Windows) ##
+
+If you check the
+[releases](https://github.com/alterNERDtive/elite-scripts/releases) you’ll find
+a .zip file with pre-compiled scripts that don’t need Python installed. Mostly
+a) for saving myself some hassle and b) because that’s easier to distribute with
+my
+[VoiceAttack profiles](https://github.com/alterNERDtive/VoiceAttack-profiles).
+
+## Scripts ##
+
+### edsm-getnearest.py ###
 
 ```
 usage: edsm-getnearest.py [-h] --system SYSTEM [--short] [--gui | --text]
@@ -31,7 +42,7 @@ optional arguments:
   --text           explicitly give text output
 ```
 
-## explorationtools.py ##
+### explorationtools.py ###
 
 ```
 usage: explorationtools.py [-h]
