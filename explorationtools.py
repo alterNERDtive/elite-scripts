@@ -13,7 +13,8 @@ def getBodyCount(system):
   return System(system).bodyCount
 
 def distanceBetween(system1, system2):
-  return System(system1).distanceTo(System(system2))
+  systems = System.getSystems(system1, system2)
+  return systems[0].distanceTo(systems[1])
 
 def getCommanderPosition(name, apikey):
   coords = Commander(name, apikey).currentPosition
