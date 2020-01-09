@@ -81,13 +81,15 @@ optional arguments:
 ```
 
 ```
-usage: explorationtools.py distancebetween [-h] system system
+usage: explorationtools.py distancebetween [-h] [--roundto [ROUNDTO]]
+                                           system system
 
 positional arguments:
-  system      the systems to measure
+  system               the systems to measure
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help           show this help message and exit
+  --roundto [ROUNDTO]  the number of digits to round to (default: 2)
 ```
 
 ```

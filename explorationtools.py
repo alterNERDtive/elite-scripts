@@ -12,9 +12,12 @@ from pyEDSM.edsm.models import System, Commander
 def getBodyCount(system):
   return System(system).bodyCount
 
-def distanceBetween(system1, system2):
+def distanceBetween(system1, system2, roundTo=2):
   systems = System.getSystems(system1, system2)
-  return systems[0].distanceTo(systems[1])
+  distance = systems[0].distanceTo(systems[1], roundTo)
+  if roundTo == 0:
+    distance = int(distance)
+  return distance
 
 def getCommanderPosition(name, apikey):
   coords = Commander(name, apikey).currentPosition
@@ -54,6 +57,8 @@ parser_distance = subparsers.add_parser("distancebetween",
     help="Calculates the distance between two systems. Will exit with code 1 "
     + "on server error and code 2 if (one of) the systems could not be found "
     + "on EDSM.")
+parser_distance.add_argument("--roundto", nargs="?", type=int, default=2,
+    help="the number of digits to round to (default: 2)")
 parser_distance.add_argument("system", nargs=2, help="the systems to measure")
 
 parser_find = subparsers.add_parser("findcommander",
@@ -84,7 +89,7 @@ try:
   if args.subCommand == "bodycount":
     out = getBodyCount(args.system[0])
   elif args.subCommand == "distancebetween":
-    out = distanceBetween(args.system[0], args.system[1])
+    out = distanceBetween(args.system[0], args.system[1], args.roundto)
   elif args.subCommand == "findcommander":
     if args.coords:
       out = getCommanderPosition(args.name, args.apikey)
