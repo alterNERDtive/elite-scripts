@@ -60,6 +60,12 @@ cat >> README.md << EOF
 
 \`\`\`
 EOF
+./explorationtools.py findsystem -h >> README.md
+cat >> README.md << EOF
+\`\`\`
+
+\`\`\`
+EOF
 ./explorationtools.py systemlist -h >> README.md
 cat >> README.md << EOF
 \`\`\`

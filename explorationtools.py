@@ -33,13 +33,30 @@ def getCommanderSystem(name, apikey):
   return Commander(name, apikey).currentSystem
 
 def getSystemList(name):
-  ret = ""
-
   systems = System.getSystems(name)
+  ret = ""
   for system in systems:
     ret += "{}\n".format(system.name)
-
   return ret[:-1]
+
+def getSystemNear(name):
+  # Probably want to abort at _some_ point. I’m defining two full words left as
+  # the condition for that now.
+  if name.count(' ') < 2:
+    ret = "Aborting search at {}, require more than 2 words to limit the "
+    ret += "result set."
+    return ret.format(name)
+
+  try:
+    systems = System.getSystems(name)
+  except NotFoundError:
+    return getSystemNear(name[:-1])
+  else:
+    ret = ""
+    for system in systems:
+      ret += "{} ({}, {}, {})\n".format(system.name,
+          system.coords['x'], system.coords['y'], system.coords['z'])
+    return ret[:-1]
 
 # ===========================================================================
 
@@ -61,19 +78,24 @@ parser_distance.add_argument("--roundto", nargs="?", type=int, default=2,
     help="the number of digits to round to (default: 2)")
 parser_distance.add_argument("system", nargs=2, help="the systems to measure")
 
-parser_find = subparsers.add_parser("findcommander",
+parser_findCmdr = subparsers.add_parser("findcommander",
     help="Attempts to find a CMDR’s last known position. Will exit with code 1 "
     + "on server error and code 2 if the CMDR could not be found on EDSM.")
-group = parser_find.add_mutually_exclusive_group(required=False)
+group = parser_findCmdr.add_mutually_exclusive_group(required=False)
 group.add_argument('--system', action='store_true',
     help='output the commander’s last known system (default)')
 group.add_argument('--coords', action='store_true',
     help='output the commander’s last known position in {x,y,z} coordinates')
 group.add_argument('--url', action='store_true',
     help='output the commander’s profile URL')
-parser_find.add_argument("name", help="the commander in question")
-parser_find.add_argument("apikey", default="", nargs="?",
+parser_findCmdr.add_argument("name", help="the commander in question")
+parser_findCmdr.add_argument("apikey", default="", nargs="?",
     help="the commander’s EDSM API key. Can be empty for public profiles.")
+
+parser_findSystem = subparsers.add_parser("findsystem",
+    help="Attempts to find a partially matching system that should then "
+    + "hopefully be in the vicinity of the given system")
+parser_findSystem.add_argument("system", help="the system in question")
 
 parser_bodycount = subparsers.add_parser("systemlist",
     help="Pulls all system names starting with the given string from EDSM")
@@ -97,8 +119,13 @@ try:
       out = getCommanderProfileUrl(args.name, args.apikey)
     else:
       out = getCommanderSystem(args.name, args.apikey)
+  elif args.subCommand == "findsystem":
+    out = getSystemNear(args.system)
   elif args.subCommand == "systemlist":
     out = getSystemList(args.partialsystem)
+  else:
+    parser.print_usage()
+    sys.exit(1)
 except ServerError as e:
   print(e)
   sys.exit(1)
