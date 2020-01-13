@@ -8,8 +8,10 @@
 * Tkinter
 
 You probably want to install your distribution/OS package for Tkinter instead of
-using pip. Then do the good old `pip install --user -r requirements.txt` or
-`pip3 install --user -r requirements.txt`.
+using pip. Then do the good old `pip install --user -r requirements.txt`.
+
+You’ll also need to install pyEDSM’s dependencies:
+`pip install --user -r pyEDSM/requirements.txt`
 
 ## Pre-Compiled Version (Windows) ##
 
