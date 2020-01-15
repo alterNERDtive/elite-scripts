@@ -108,20 +108,20 @@ args = parser.parse_args()
 # ===========================================================================
 
 try:
-  if args.subCommand == "bodycount":
+  if args.subcommand == "bodycount":
     out = getBodyCount(args.system[0])
-  elif args.subCommand == "distancebetween":
+  elif args.subcommand == "distancebetween":
     out = distanceBetween(args.system[0], args.system[1], args.roundto)
-  elif args.subCommand == "findcommander":
+  elif args.subcommand == "findcommander":
     if args.coords:
       out = getCommanderPosition(args.name, args.apikey)
     elif args.url:
       out = getCommanderProfileUrl(args.name, args.apikey)
     else:
       out = getCommanderSystem(args.name, args.apikey)
-  elif args.subCommand == "findsystem":
+  elif args.subcommand == "findsystem":
     out = getSystemNear(args.system)
-  elif args.subCommand == "systemlist":
+  elif args.subcommand == "systemlist":
     out = getSystemList(args.partialsystem)
 except ServerError as e:
   print(e)
