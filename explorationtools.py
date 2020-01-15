@@ -63,7 +63,7 @@ def getSystemNear(name):
 parser = argparse.ArgumentParser(description="A collection of tools useful for "
     + "exploration.")
 subparsers = parser.add_subparsers(title="subcommands", help="sub-command help",
-    dest="subCommand")
+    dest="subcommand", required=True)
 
 parser_bodycount = subparsers.add_parser("bodycount",
     help="Returns the number of bodies in a system. Will exit with code 1 on "
@@ -123,9 +123,6 @@ try:
     out = getSystemNear(args.system)
   elif args.subCommand == "systemlist":
     out = getSystemList(args.partialsystem)
-  else:
-    parser.print_usage(sys.stderr)
-    sys.exit(1)
 except ServerError as e:
   print(e)
   sys.exit(1)
