@@ -124,7 +124,7 @@ try:
   elif args.subCommand == "systemlist":
     out = getSystemList(args.partialsystem)
   else:
-    parser.print_usage()
+    parser.print_usage(sys.stderr)
     sys.exit(1)
 except ServerError as e:
   print(e)
