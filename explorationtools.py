@@ -3,6 +3,7 @@
 import argcomplete, argparse
 import math
 import sys
+from datetime import datetime
 
 from pyEDSM.edsm.exception import ServerError, NotFoundError
 from pyEDSM.edsm.models import System, Commander
@@ -30,7 +31,26 @@ def getCommanderProfileUrl(name, apikey):
   return Commander(name, apikey).profileUrl
 
 def getCommanderSystem(name, apikey):
-  return Commander(name, apikey).currentSystem
+  cmdr = Commander(name, apikey)
+  return "{} (last seen {})".format(cmdr.currentSystem,
+      when(cmdr.lastActivity))
+def when(date):
+  diff = datetime.now() - date
+  ret = ""
+  if diff.days > 0:
+    ret += "{} days ".format(diff.days)
+  if diff.seconds > 0:
+    hours = int(diff.seconds / 3600)
+    if hours > 0:
+      ret += "{} hours ".format(hours)
+    minutes = int(diff.seconds % 3600 / 60)
+    if minutes > 0:
+      ret += "{} minutes ".format(minutes)
+    if diff.days == 0 and hours == 0 and minutes == 0:
+      # ONLY seconds!
+      ret = "{} seconds ".format(diff.seconds)
+  ret += "ago"
+  return ret
 
 def getSystemList(name):
   systems = System.getSystems(name)
@@ -80,7 +100,8 @@ parser_distance.add_argument("system", nargs=2, help="the systems to measure")
 
 parser_findCmdr = subparsers.add_parser("findcommander",
     help="Attempts to find a CMDR’s last known position. Will exit with code 1 "
-    + "on server error and code 2 if the CMDR could not be found on EDSM.")
+    + "on server error and code 2 if the CMDR could not be found on EDSM. Will "
+    + "also give you the time of last activity if you search for their system.")
 group = parser_findCmdr.add_mutually_exclusive_group(required=False)
 group.add_argument('--system', action='store_true',
     help='output the commander’s last known system (default)')

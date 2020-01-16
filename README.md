@@ -67,7 +67,9 @@ subcommands:
                         systems could not be found on EDSM.
     findcommander       Attempts to find a CMDR’s last known position. Will
                         exit with code 1 on server error and code 2 if the
-                        CMDR could not be found on EDSM.
+                        CMDR could not be found on EDSM. Will also give you
+                        the time of last activity if you search for their
+                        system.
     findsystem          Attempts to find a partially matching system that
                         should then hopefully be in the vicinity of the given
                         system
