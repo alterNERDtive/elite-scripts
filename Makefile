@@ -10,10 +10,10 @@ docs:
 
 # requires a windows box
 exe:
-	pip install --user -r requirements.txt
-	pip install --user -r pyEDSM\requirements.txt
-	pyinstaller.exe -y edsm-getnearest.py
-	pyinstaller.exe -y explorationtools.py
+	pip install --user --upgrade -r requirements.txt
+	pip install --user --upgrade -r pyEDSM\requirements.txt
+	python -OO -m PyInstaller --clean -yF edsm-getnearest.py
+	python -OO -m PyInstaller --clean -yF explorationtools.py
 
 # probably won’t work unless you’re me :)
 release: clean
