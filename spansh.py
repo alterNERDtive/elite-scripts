@@ -67,5 +67,8 @@ if args.subcommand == "oldstations":
   else:
     out = getOldStations(args.count, args.systemlist)
 
-print(out)
-sys.exit(0)
+if out == "":
+  sys.exit(3)
+else:
+  print(out)
+  sys.exit(0)
