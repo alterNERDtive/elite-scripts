@@ -135,6 +135,35 @@ optional arguments:
   -h, --help     show this help message and exit
 ```
 
+### spansh.py ###
+
+```
+usage: spansh.py [-h] {oldstations} ...
+
+Script for interfacing with Spansh’s API.
+
+optional arguments:
+  -h, --help     show this help message and exit
+
+subcommands:
+  {oldstations}  sub-command help
+    oldstations  Searches for stations with old data (>1 year without an
+                 update.
+```
+
+```
+usage: spansh.py oldstations [-h] [--system [SYSTEM]] [--count [COUNT]]
+                             [--systemlist]
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --system [SYSTEM]  a single system to query. If not present, get the oldest
+                     stations overall.
+  --count [COUNT]    how many stations to output. Defaults to 50.
+  --systemlist       outputs a list of systems to visit _only_, no station
+                     names (for)easy system names c&p
+```
+
 ## Need Help / Want to Contribute? ##
 
 Just [file an issue](https://github.com/alterNERDtive/elite-scripts/issues/new)
