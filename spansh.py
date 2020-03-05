@@ -50,8 +50,8 @@ parser_oldstations.add_argument("--system", nargs="?",
 parser_oldstations.add_argument("--count", nargs="?", type=int, default=50,
     help="how many stations to output. Defaults to 50.")
 parser_oldstations.add_argument("--systemlist", action='store_true',
-    help="outputs a list of systems to visit _only_, no station names (for)"
-        + "easy system names c&p")
+    help="outputs a list of systems to visit _only_, no station names (for"
+        + "easy system names c&p)")
 
 argcomplete.autocomplete(parser)
 args = parser.parse_args()

@@ -161,7 +161,7 @@ optional arguments:
                      stations overall.
   --count [COUNT]    how many stations to output. Defaults to 50.
   --systemlist       outputs a list of systems to visit _only_, no station
-                     names (for)easy system names c&p
+                     names (foreasy system names c&p)
 ```
 
 ## Need Help / Want to Contribute? ##
