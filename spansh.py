@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 # PYTHON_ARGCOMPLETE_OK
 import argcomplete, argparse
+import json as JSON
 import requests
 import sys
 
+from datetime import datetime, timedelta
+
 # ===========================================================================
 
-def getOldStations(count, systemsonly):
-  url = "http://backend3.spansh.co.uk:3000/api/stations/search"
-  params = {"json": '{"filters":{"updated_at":{"value":["2017-11-06","2019-03-01"],"comparison":"<=>"}},"sort":[{"updated_at":{"direction":"asc"}}],"size":' + str(count)  + '}'}
-
-  json = requests.post(url, params).json()
+def getOldStations(systemsonly):
+  params = {"json": JSON.dumps({"filters": FILTERS, "sort": SORT, "size": COUNT})}
+  json = requests.post(APIURL, params).json()
 
   ret =""
-
   if systemsonly:
     for station in json["results"]:
       ret += "{}\n".format(station["system_name"])
@@ -25,13 +25,11 @@ def getOldStations(count, systemsonly):
   return ret[:-1]
 
 def getOldStationsInSystem(system):
-  url = "http://backend3.spansh.co.uk:3000/api/stations/search"
-  params = {"json": '{"filters": {"system_name": {"value": "' + system + '"},"updated_at":{"value":["2017-11-06","2019-03-01"],"comparison":"<=>"}},"sort":[{"updated_at":{"direction":"asc"}}]}'}
-
-  json = requests.post(url, params).json()
+  FILTERS.update(system_name={"value": system})
+  params = {"json": JSON.dumps({"filters": FILTERS, "sort": SORT})}
+  json = requests.post(APIURL, params).json()
 
   ret =""
-
   for station in json["results"]:
     ret += "{}, ".format(station["name"])
 
@@ -60,12 +58,25 @@ args = parser.parse_args()
 
 # ===========================================================================
 
+APIURL = "http://backend3.spansh.co.uk:3000/api/stations/search"
+
+FILTERS = {"updated_at":
+  {"value":
+    ["2017-11-06",
+    (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")],
+  "comparison": "<=>"}}
+SORT = {"updated_at": {"direction": "asc"}}
+COUNT = args.count
+
 out =""
 if args.subcommand == "oldstations":
   if args.system:
     out = getOldStationsInSystem(args.system)
   else:
-    out = getOldStations(args.count, args.systemlist)
+    out = getOldStations(args.systemlist)
+else:
+  parser.print_usage(sys.stderr)
+  sys.exit(1)
 
 if out == "":
   sys.exit(3)
