@@ -9,16 +9,15 @@ from datetime import datetime, timedelta
 
 # ===========================================================================
 
-def getOldStations(systemsonly):
+def getOldStations():
   params = {"json": JSON.dumps({"filters": FILTERS, "sort": SORT, "size": COUNT})}
   json = requests.post(APIURL, params).json()
 
   ret =""
-  if systemsonly:
-    for station in json["results"]:
+  for station in json["results"]:
+    if args.short:
       ret += "{}\n".format(station["system_name"])
-  else:
-    for station in json["results"]:
+    else:
       ret += "{}: {} ({})\n".format(station["system_name"], station["name"],
         station["updated_at"])
 
@@ -31,9 +30,12 @@ def getOldStationsInSystem(system):
 
   ret =""
   for station in json["results"]:
-    ret += "{}, ".format(station["name"])
+    if args.short:
+      ret += "{}\n".format(station["name"])
+    else:
+      ret += "{} ({})\n".format(station["name"], station["updated_at"])
 
-  return ret[:-2]
+  return ret[:-1]
 
 # ===========================================================================
 
@@ -49,9 +51,8 @@ parser_oldstations.add_argument("--system", nargs="?",
         + "overall.")
 parser_oldstations.add_argument("--count", nargs="?", type=int, default=50,
     help="how many stations to output. Defaults to 50.")
-parser_oldstations.add_argument("--systemlist", action='store_true',
-    help="outputs a list of systems to visit _only_, no station names (for"
-        + "easy system names c&p)")
+parser_oldstations.add_argument("--short", action='store_true',
+    help="short output format (system/station names only)")
 
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
@@ -73,7 +74,7 @@ if args.subcommand == "oldstations":
   if args.system:
     out = getOldStationsInSystem(args.system)
   else:
-    out = getOldStations(args.systemlist)
+    out = getOldStations()
 else:
   parser.print_usage(sys.stderr)
   sys.exit(1)

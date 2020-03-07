@@ -153,15 +153,14 @@ subcommands:
 
 ```
 usage: spansh.py oldstations [-h] [--system [SYSTEM]] [--count [COUNT]]
-                             [--systemlist]
+                             [--short]
 
 optional arguments:
   -h, --help         show this help message and exit
   --system [SYSTEM]  a single system to query. If not present, get the oldest
                      stations overall.
   --count [COUNT]    how many stations to output. Defaults to 50.
-  --systemlist       outputs a list of systems to visit _only_, no station
-                     names (foreasy system names c&p)
+  --short            short output format (system/station names only)
 ```
 
 ## Need Help / Want to Contribute? ##
