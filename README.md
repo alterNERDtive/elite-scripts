@@ -138,7 +138,7 @@ optional arguments:
 ### spansh.py ###
 
 ```
-usage: spansh.py [-h] {nearestsystem,oldstations} ...
+usage: spansh.py [-h] {nearestsystem,oldstations,systemexists} ...
 
 Script for interfacing with Spansh’s API.
 
@@ -146,12 +146,14 @@ optional arguments:
   -h, --help            show this help message and exit
 
 subcommands:
-  {nearestsystem,oldstations}
+  {nearestsystem,oldstations,systemexists}
                         sub-command help
     nearestsystem       Searches for the nearest system in the database to
                         given coordinates.
     oldstations         Searches for stations with old data (>1 year without
                         an update.
+    systemexists        Checks if a given system exists in the search
+                        database.
 ```
 
 ```
@@ -177,6 +179,16 @@ optional arguments:
                      stations overall.
   --count [COUNT]    how many stations to output. Defaults to 50.
   --short            short output format (system/station names only)
+```
+
+```
+usage: spansh.py systemexists [-h] system
+
+positional arguments:
+  system      the system to search for
+
+optional arguments:
+  -h, --help  show this help message and exit
 ```
 
 ## Need Help / Want to Contribute? ##

@@ -92,6 +92,12 @@ EOF
 cat >> README.md << EOF
 \`\`\`
 
+\`\`\`
+EOF
+./spansh.py systemexists -h >> README.md
+cat >> README.md << EOF
+\`\`\`
+
 ## Need Help / Want to Contribute? ##
 
 Just [file an issue](https://github.com/alterNERDtive/elite-scripts/issues/new)

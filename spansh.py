@@ -88,6 +88,31 @@ def getOldStationsInSystem(system):
 
   return ret[:-1]
 
+def systemExists(system):
+  params = {
+      "json": JSON.dumps({
+        "filters": {
+          "name": {
+            "value": system
+            }
+          }
+        })
+      }
+  response = requests.post(APIURLS["systems"], params)
+  if response.status_code != 200:
+    raise ServerError(url, params)
+
+  json = response.json()
+  if json["count"] == 0:
+    raise NotFoundError()
+
+  ret = ""
+  for system in json["results"]:
+    ret += "{} ({}, {}, {})\n".format(system["name"], system["x"], system["y"],
+        system["z"])
+
+  return ret[:-1]
+
 # ===========================================================================
 
 parser = argparse.ArgumentParser(description="Script for interfacing with "
@@ -115,14 +140,20 @@ parser_oldstations.add_argument("--count", nargs="?", type=int, default=50,
 parser_oldstations.add_argument("--short", action='store_true',
     help="short output format (system/station names only)")
 
+parser_systemexists = subparsers.add_parser("systemexists",
+    help="Checks if a given system exists in the search database.")
+parser_systemexists.add_argument("system", nargs=1,
+    help="the system to search for")
+
 argcomplete.autocomplete(parser)
 args = parser.parse_args()
 
 # ===========================================================================
 
 APIURLS = {
+    "nearest": "https://spansh.co.uk/api/nearest",
     "stations": "https://spansh.co.uk/api/stations/search",
-    "nearest": "https://spansh.co.uk/api/nearest"
+    "systems": "https://spansh.co.uk/api/systems/search",
     }
 FILTERS = {
     "updated_at":
@@ -148,6 +179,8 @@ try:
       out = getOldStationsInSystem(args.system)
     else:
       out = getOldStations()
+  elif args.subcommand == "systemexists":
+    out = systemExists(args.system)
 except ServerError as e:
   print(e)
   sys.exit(1)
