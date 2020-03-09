@@ -41,7 +41,7 @@ def getOldStations():
       }
   json = requests.post(APIURLS["stations"], params).json()
 
-  ret =""
+  ret = ""
   for station in json["results"]:
     if args.short:
       ret += "{}\n".format(station["system_name"])
@@ -61,7 +61,7 @@ def getOldStationsInSystem(system):
       }
   json = requests.post(APIURLS["stations"], params).json()
 
-  ret =""
+  ret = ""
   for station in json["results"]:
     if args.short:
       ret += "{}\n".format(station["name"])
@@ -122,7 +122,7 @@ SORT = {
       }
     }
 
-out =""
+out = None
 if args.subcommand == "nearestsystem":
   out = getNearestSystem(args.coordinate)
 elif args.subcommand == "oldstations":
@@ -130,12 +130,6 @@ elif args.subcommand == "oldstations":
     out = getOldStationsInSystem(args.system)
   else:
     out = getOldStations()
-else:
-  parser.print_usage(sys.stderr)
-  sys.exit(1)
 
-if out == "":
-  sys.exit(3)
-else:
-  print(out)
-  sys.exit(0)
+print(out)
+sys.exit(0)
