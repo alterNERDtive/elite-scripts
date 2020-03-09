@@ -82,6 +82,12 @@ cat >> README.md << EOF
 
 \`\`\`
 EOF
+./spansh.py nearestsystem -h >> README.md
+cat >> README.md << EOF
+\`\`\`
+
+\`\`\`
+EOF
 ./spansh.py oldstations -h >> README.md
 cat >> README.md << EOF
 \`\`\`

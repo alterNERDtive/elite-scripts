@@ -138,17 +138,31 @@ optional arguments:
 ### spansh.py ###
 
 ```
-usage: spansh.py [-h] {oldstations} ...
+usage: spansh.py [-h] {nearestsystem,oldstations} ...
 
 Script for interfacing with Spansh’s API.
 
 optional arguments:
-  -h, --help     show this help message and exit
+  -h, --help            show this help message and exit
 
 subcommands:
-  {oldstations}  sub-command help
-    oldstations  Searches for stations with old data (>1 year without an
-                 update.
+  {nearestsystem,oldstations}
+                        sub-command help
+    nearestsystem       Searches for the nearest system in the database to
+                        given coordinates.
+    oldstations         Searches for stations with old data (>1 year without
+                        an update.
+```
+
+```
+usage: spansh.py nearestsystem [-h] [--short] coordinate coordinate coordinate
+
+positional arguments:
+  coordinate  the coordinates to search for (order: x, y, z)
+
+optional arguments:
+  -h, --help  show this help message and exit
+  --short     short output format (system name only)
 ```
 
 ```
