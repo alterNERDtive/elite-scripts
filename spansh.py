@@ -153,7 +153,7 @@ except ServerError as e:
   sys.exit(1)
 except NotFoundError as e:
   print("No results found.")
-  sys.exit(2)
+  sys.exit(3)
 else:
   print(out)
   sys.exit(0)
