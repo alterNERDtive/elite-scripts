@@ -7,6 +7,20 @@ import sys
 
 from datetime import datetime, timedelta
 
+from pyEDSM.edsm.exception import ServerError, NotFoundError
+
+# ===========================================================================
+
+def querystations(url, params):
+  response = requests.post(url, params)
+  if response.status_code != 200:
+    raise ServerError(url, params)
+  json = response.json()
+  if json["count"] == 0:
+    raise NotFoundError()
+  print(json)
+  return json
+
 # ===========================================================================
 
 def getNearestSystem(coords):
@@ -15,7 +29,11 @@ def getNearestSystem(coords):
       "y": coords[1],
       "z": coords[2]
       }
-  json = requests.post(APIURLS["nearest"], params).json()
+  response = requests.post(APIURLS["nearest"], params)
+  if response.status_code != 200:
+    raise ServerError(url, params)
+
+  json = response.json()
 
   ret = None
   system = json["system"]
@@ -39,7 +57,7 @@ def getOldStations():
         "size": args.count
         })
       }
-  json = requests.post(APIURLS["stations"], params).json()
+  json = querystations(APIURLS["stations"], params)
 
   ret = ""
   for station in json["results"]:
@@ -59,7 +77,7 @@ def getOldStationsInSystem(system):
         "sort": SORT
         })
       }
-  json = requests.post(APIURLS["stations"], params).json()
+  json = querystations(APIURLS["stations"], params)
 
   ret = ""
   for station in json["results"]:
@@ -122,14 +140,20 @@ SORT = {
       }
     }
 
-out = None
-if args.subcommand == "nearestsystem":
-  out = getNearestSystem(args.coordinate)
-elif args.subcommand == "oldstations":
-  if args.system:
-    out = getOldStationsInSystem(args.system)
-  else:
-    out = getOldStations()
-
-print(out)
-sys.exit(0)
+try:
+  if args.subcommand == "nearestsystem":
+    out = getNearestSystem(args.coordinate)
+  elif args.subcommand == "oldstations":
+    if args.system:
+      out = getOldStationsInSystem(args.system)
+    else:
+      out = getOldStations()
+except ServerError as e:
+  print(e)
+  sys.exit(1)
+except NotFoundError as e:
+  print("No results found.")
+  sys.exit(2)
+else:
+  print(out)
+  sys.exit(0)
