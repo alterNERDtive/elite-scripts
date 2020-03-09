@@ -10,8 +10,11 @@ docs:
 
 # requires a windows box
 exe:
-	pyinstaller.exe -y edsm-getnearest.py
-	pyinstaller.exe -y explorationtools.py
+	pip install --user --upgrade -r requirements.txt
+	pip install --user --upgrade -r pyEDSM\requirements.txt
+	python -OO -m PyInstaller --clean -yF edsm-getnearest.py
+	python -OO -m PyInstaller --clean -yF explorationtools.py
+	python -OO -m PyInstaller --clean -yF spansh.py
 
 # probably won’t work unless you’re me :)
 release: clean

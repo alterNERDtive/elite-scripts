@@ -67,7 +67,9 @@ subcommands:
                         systems could not be found on EDSM.
     findcommander       Attempts to find a CMDR’s last known position. Will
                         exit with code 1 on server error and code 2 if the
-                        CMDR could not be found on EDSM.
+                        CMDR could not be found on EDSM. Will also give you
+                        the time of last activity if you search for their
+                        system.
     findsystem          Attempts to find a partially matching system that
                         should then hopefully be in the vicinity of the given
                         system
@@ -131,6 +133,62 @@ positional arguments:
 
 optional arguments:
   -h, --help     show this help message and exit
+```
+
+### spansh.py ###
+
+```
+usage: spansh.py [-h] {nearestsystem,oldstations,systemexists} ...
+
+Script for interfacing with Spansh’s API.
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+subcommands:
+  {nearestsystem,oldstations,systemexists}
+                        sub-command help
+    nearestsystem       Searches for the nearest system in the database to
+                        given coordinates.
+    oldstations         Searches for stations with old data (>1 year without
+                        an update.
+    systemexists        Checks if a given system exists in the search
+                        database.
+```
+
+```
+usage: spansh.py nearestsystem [-h] [--short | --parsable]
+                               coordinate coordinate coordinate
+
+positional arguments:
+  coordinate  the coordinates to search for (order: x, y, z)
+
+optional arguments:
+  -h, --help  show this help message and exit
+  --short     short output format (system name only)
+  --parsable  parsable output format (<name>|<x>,<y>,<z>|<distance>)
+```
+
+```
+usage: spansh.py oldstations [-h] [--system [SYSTEM]] [--count [COUNT]]
+                             [--short]
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --system [SYSTEM]  a single system to query. If not present, get the oldest
+                     stations overall.
+  --count [COUNT]    how many stations to output. Defaults to 50.
+  --short            short output format (system/station names only)
+```
+
+```
+usage: spansh.py systemexists [-h] system
+
+positional arguments:
+  system      the system to search for
+
+optional arguments:
+  -h, --help  show this help message and exit
 ```
 
 ## Need Help / Want to Contribute? ##
