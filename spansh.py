@@ -17,9 +17,13 @@ def getNearestSystem(coords):
       }
   json = requests.post(APIURLS["nearest"], params).json()
 
-  ret = ""
+  ret = None
+  system = json["system"]
   if args.short:
-    ret = json["system"]["name"]
+    ret = system["name"]
+  elif args.parsable:
+    ret = "{}|{},{},{}|{}".format(system["name"], system["x"],
+        system["y"], system["z"], round(system["distance"], 2))
   else:
     system = json["system"]
     ret = "{} ({}, {}, {}), {} ly".format(system["name"], system["x"],
@@ -77,8 +81,11 @@ parser_nearestsystem = subparsers.add_parser("nearestsystem",
     help="Searches for the nearest system in the database to given coordinates.")
 parser_nearestsystem.add_argument("coordinate", nargs=3, type=int,
     help="the coordinates to search for (order: x, y, z)")
-parser_nearestsystem.add_argument("--short", action='store_true',
+group = parser_nearestsystem.add_mutually_exclusive_group(required=False)
+group.add_argument("--short", action='store_true',
     help="short output format (system name only)")
+group.add_argument("--parsable", action='store_true',
+    help="parsable output format (<name>|<x>,<y>,<z>|<distance>)")
 
 parser_oldstations = subparsers.add_parser("oldstations",
     help="Searches for stations with old data (>1 year without an update.")

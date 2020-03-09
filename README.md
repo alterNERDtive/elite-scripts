@@ -155,7 +155,8 @@ subcommands:
 ```
 
 ```
-usage: spansh.py nearestsystem [-h] [--short] coordinate coordinate coordinate
+usage: spansh.py nearestsystem [-h] [--short | --parsable]
+                               coordinate coordinate coordinate
 
 positional arguments:
   coordinate  the coordinates to search for (order: x, y, z)
@@ -163,6 +164,7 @@ positional arguments:
 optional arguments:
   -h, --help  show this help message and exit
   --short     short output format (system name only)
+  --parsable  parsable output format (<name>|<x>,<y>,<z>|<distance>)
 ```
 
 ```
