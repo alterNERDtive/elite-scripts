@@ -18,7 +18,6 @@ def querystations(url, params):
   json = response.json()
   if json["count"] == 0:
     raise NotFoundError()
-  print(json)
   return json
 
 # ===========================================================================
