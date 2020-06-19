@@ -1,4 +1,4 @@
-all: docs
+all: clean docs release
 
 zipfile = elite-scripts.zip
 
