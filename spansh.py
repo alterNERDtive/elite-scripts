@@ -80,10 +80,13 @@ def getOldStationsInSystem(system):
 
   ret = ""
   for station in json["results"]:
-    if args.short:
-      ret += "{}\n".format(station["name"])
-    else:
-      ret += "{} ({})\n".format(station["name"], station["updated_at"])
+    # systems including the given name as a word will also trigger;
+    # looking for e.g. “Mari” will also give you stuff in “Mac Mari”!
+    if station["system_name"] == system:
+      if args.short:
+        ret += "{}\n".format(station["name"])
+      else:
+        ret += "{} ({})\n".format(station["name"], station["updated_at"])
 
   return ret[:-1]
 
