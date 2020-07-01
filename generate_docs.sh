@@ -115,5 +115,5 @@ cat >> README.md << EOF
 ## Need Help / Want to Contribute? ##
 
 Just [file an issue](https://github.com/alterNERDtive/elite-scripts/issues/new)
-here or [hop into Discord](https://discord.gg/uUKFdW) if that is your thing.
+here or [hop into Discord](https://discord.gg/XHNX7jN) if that is your thing.
 EOF
