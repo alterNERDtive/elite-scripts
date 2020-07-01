@@ -10,21 +10,18 @@ from pyEDSM.edsm.exception import ServerError, NotFoundError
 
 # ===========================================================================
 
-def querystations(url, params):
-  response = requests.post(url, params)
-  if response.status_code != 200:
-    raise ServerError(url, params)
-  json = response.json()
-  if json["count"] == 0:
-    raise NotFoundError()
-  return json
-
-# ===========================================================================
+class ProcGenNameError(Exception):
+  def __str__(self):
+    return "Given system is not a valid proc gen name."
 
 def getCoords(system):
-  response = requests.get(APIURLS["coords"] + urllib.parse.quote(system))
+  url = APIURLS["coords"] + urllib.parse.quote(system)
+  response = requests.get(url)
   if response.status_code != 200:
-    raise ServerError(url, params)
+    if response.status_code == 400:
+      raise ProcGenNameError()
+    else:
+      raise ServerError(url, {})
 
   json = response.json()['result']
 
@@ -68,6 +65,9 @@ try:
 except ServerError as e:
   print(e)
   sys.exit(1)
+except ProcGenNameError as e:
+  print(e)
+  sys.exit(4)
 except NotFoundError as e:
   print("Maximum uncertainty exceeded: " + str(int(coords['uncertainty']))
       + " > " + str(args.maxuncertainty))
