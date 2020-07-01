@@ -1,4 +1,4 @@
-# devel
+# 0.5 (2020-07-01)
 
 Changed Changelog format. Should be even clearer now at a glance!
 
