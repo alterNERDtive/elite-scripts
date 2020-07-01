@@ -10,6 +10,10 @@ See [KeepAChangelog](https://keepachangelog.com/en/1.0.0/).
   implemented thing is getting approximate coordinates for a given procedually 
   generated system name.
 
+# 0.4.1 (2020-06-18)
+
+* removed accidentally left over debug print code from `spansh.py`
+
 # 0.4 (2020-03-09)
 
 Kind of a big one. Obviously because in addition to EDSM, I can now do some 
