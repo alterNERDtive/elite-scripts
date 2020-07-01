@@ -44,6 +44,34 @@ optional arguments:
   --text           explicitly give text output
 ```
 
+### edts.py ###
+
+```
+usage: edts.py [-h] {coords} ...
+
+Script for interfacing with Alot’s hosted EDTS API.
+
+optional arguments:
+  -h, --help  show this help message and exit
+
+subcommands:
+  {coords}    sub-command help
+    coords    Searches for the approximate coordinates of a given procedurally
+              generated system name.
+```
+
+```
+usage: edts.py coords [-h] [--maxuncertainty [MAXUNCERTAINTY]] system
+
+positional arguments:
+  system                the system name to get coordinates for
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --maxuncertainty [MAXUNCERTAINTY]
+                        maximum accepted uncertainty, if any
+```
+
 ### explorationtools.py ###
 
 ```
@@ -194,4 +222,4 @@ optional arguments:
 ## Need Help / Want to Contribute? ##
 
 Just [file an issue](https://github.com/alterNERDtive/elite-scripts/issues/new)
-here or [hop into Discord](https://discord.gg/XHNX7jN) if that is your thing.
+here or [hop into Discord](https://discord.gg/uUKFdW) if that is your thing.

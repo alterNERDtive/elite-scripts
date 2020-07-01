@@ -13,6 +13,7 @@ exe:
 	pip install --user --upgrade -r requirements.txt
 	pip install --user --upgrade -r pyEDSM\requirements.txt
 	python -OO -m PyInstaller --clean -yF edsm-getnearest.py
+	python -OO -m PyInstaller --clean -yF edts.py
 	python -OO -m PyInstaller --clean -yF explorationtools.py
 	python -OO -m PyInstaller --clean -yF spansh.py
 

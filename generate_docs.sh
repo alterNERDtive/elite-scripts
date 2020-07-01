@@ -34,6 +34,20 @@ EOF
 cat >> README.md << EOF
 \`\`\`
 
+### edts.py ###
+
+\`\`\`
+EOF
+./edts.py -h >> README.md
+cat >> README.md << EOF
+\`\`\`
+
+\`\`\`
+EOF
+./edts.py coords -h >> README.md
+cat >> README.md << EOF
+\`\`\`
+
 ### explorationtools.py ###
 
 \`\`\`
