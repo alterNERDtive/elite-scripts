@@ -1,3 +1,15 @@
+# devel
+
+Changed Changelog format. Should be even clearer now at a glance!
+
+See [KeepAChangelog](https://keepachangelog.com/en/1.0.0/).
+
+## Added
+
+* `edts.py`: Script for accessing Alot’s hosted EDTS API. Right now the only 
+  implemented thing is getting approximate coordinates for a given procedually 
+  generated system name.
+
 # 0.4 (2020-03-09)
 
 Kind of a big one. Obviously because in addition to EDSM, I can now do some 
