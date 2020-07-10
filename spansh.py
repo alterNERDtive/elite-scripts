@@ -5,7 +5,8 @@ import json as JSON
 import requests
 import sys
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from dateutil import parser as dtparser
 
 from pyEDSM.edsm.exception import ServerError, NotFoundError
 
@@ -63,8 +64,8 @@ def getOldStations():
     if args.short:
       ret += "{}\n".format(station["system_name"])
     else:
-      ret += "{}: {} ({})\n".format(station["system_name"], station["name"],
-        station["updated_at"])
+      ret += "{}: {} ({} days ago)\n".format(station["system_name"], station["name"],
+        (datetime.now(timezone.utc) - dtparser.parse(station["updated_at"])).days)
 
   return ret[:-1]
 
@@ -86,7 +87,8 @@ def getOldStationsInSystem(system):
       if args.short:
         ret += "{}\n".format(station["name"])
       else:
-        ret += "{} ({})\n".format(station["name"], station["updated_at"])
+        ret += "{} ({} days ago)\n".format(station["name"],
+          (datetime.now(timezone.utc) - dtparser.parse(station["updated_at"])).days)
 
   return ret[:-1]
 
