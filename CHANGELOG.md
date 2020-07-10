@@ -1,3 +1,15 @@
+# devel
+
+## Added
+
+* `spansh.py` old station snearch now takes a `--minage` (in days) argument for 
+  what you would consider “outdated” data.
+
+## Changed
+
+* `spansh.py` old station search now outputs an age in days for the last update 
+  instead of a time stamp.
+
 # 0.5 (2020-07-01)
 
 Changed Changelog format. Should be even clearer now at a glance!

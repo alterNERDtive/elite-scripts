@@ -199,13 +199,15 @@ optional arguments:
 
 ```
 usage: spansh.py oldstations [-h] [--system [SYSTEM]] [--count [COUNT]]
-                             [--short]
+                             [--minage [MINAGE]] [--short]
 
 optional arguments:
   -h, --help         show this help message and exit
   --system [SYSTEM]  a single system to query. If not present, get the oldest
                      stations overall.
   --count [COUNT]    how many stations to output. Defaults to 50.
+  --minage [MINAGE]  minimum age of data (in days) to be considered
+                     “outdated”. Defaults to 365 (= 1 year).
   --short            short output format (system/station names only)
 ```
 

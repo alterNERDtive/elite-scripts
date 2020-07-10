@@ -141,6 +141,9 @@ parser_oldstations.add_argument("--system", nargs="?",
     + "overall.")
 parser_oldstations.add_argument("--count", nargs="?", type=int, default=50,
     help="how many stations to output. Defaults to 50.")
+parser_oldstations.add_argument("--minage", nargs="?", type=int, default=365,
+    help="minimum age of data (in days) to be considered “outdated”. Defaults to "
+    + "365 (= 1 year).")
 parser_oldstations.add_argument("--short", action='store_true',
     help="short output format (system/station names only)")
 
@@ -164,7 +167,7 @@ FILTERS = {
       {
         "value": [
           "2017-11-06",
-          (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
+          (datetime.now() - timedelta(days=args.minage)).strftime("%Y-%m-%d")
         ],
         "comparison": "<=>"
       }
