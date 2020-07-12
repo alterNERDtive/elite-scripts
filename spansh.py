@@ -162,26 +162,26 @@ APIURLS = {
     "stations": "https://spansh.co.uk/api/stations/search",
     "systems": "https://spansh.co.uk/api/systems/search",
     }
-FILTERS = {
-    "updated_at":
-      {
-        "value": [
-          "2017-11-06",
-          (datetime.now() - timedelta(days=args.minage)).strftime("%Y-%m-%d")
-        ],
-        "comparison": "<=>"
-      }
-    }
-SORT = {
-    "updated_at": {
-      "direction": "asc"
-      }
-    }
 
 try:
   if args.subcommand == "nearestsystem":
     out = getNearestSystem(args.coordinate)
   elif args.subcommand == "oldstations":
+    FILTERS = {
+        "updated_at":
+        {
+          "value": [
+            "2017-11-06",
+            (datetime.now() - timedelta(days=args.minage)).strftime("%Y-%m-%d")
+            ],
+          "comparison": "<=>"
+          }
+        }
+    SORT = {
+        "updated_at": {
+          "direction": "asc"
+          }
+        }
     if args.system:
       out = getOldStationsInSystem(args.system)
     else:
