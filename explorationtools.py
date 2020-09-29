@@ -32,8 +32,11 @@ def getCommanderProfileUrl(name, apikey):
 
 def getCommanderSystem(name, apikey):
   cmdr = Commander(name, apikey)
-  return "{} (last seen {})".format(cmdr.currentSystem,
-      when(cmdr.lastActivity))
+  if cmdr.lastActivity is None:
+    return "{}".format(cmdr.currentSystem)
+  else:
+    return "{} (last seen {})".format(cmdr.currentSystem,
+        when(cmdr.lastActivity))
 def when(date):
   diff = datetime.now() - date
   ret = ""
