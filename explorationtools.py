@@ -22,10 +22,13 @@ def distanceBetween(system1, system2, roundTo=2):
 
 def getCommanderPosition(name, apikey):
   coords = Commander(name, apikey).currentPosition
-  ret = ""
-  for k in coords:
-    ret += "{}: {}, ".format(k, coords[k])
-  return ret[:-2]
+  ret = "hidden"
+  if coords:
+    ret = ""
+    for k in coords:
+      ret += "{}: {}, ".format(k, coords[k])
+    ret = ret[:-2]
+  return ret
 
 def getCommanderProfileUrl(name, apikey):
   return Commander(name, apikey).profileUrl
