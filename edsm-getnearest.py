@@ -78,9 +78,6 @@ def outputText():
   except SystemNotFoundError as e:
     print(e)
     sys.exit(2)
-  except EdsmApiException as e:
-    print(e)
-    sys.exit(1)
   nearestCmdr = min(distances,key=distances.get)
   if shortOutput:
     print('nearest commander: {} ({} ly).'.format(nearestCmdr.name,
