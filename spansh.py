@@ -80,7 +80,11 @@ def getOldStationsInSystem(system):
   json = querystations(APIURLS["stations"], params)
 
   ret = ""
-  for station in json["results"]:
+  # exclude carriers
+  stations = list(filter(lambda station: not station["type"] == "Drake-Class Carrier", json["results"]))
+  if len(stations) == 0:
+    raise NotFoundError()
+  for station in stations:
     # systems including the given name as a word will also trigger;
     # looking for e.g. “Mari” will also give you stuff in “Mac Mari”!
     if station["system_name"] == system:
