@@ -1,3 +1,19 @@
+# 0.7 (2021-01-28)
+
+## Changed
+
+* spansh.py: Fleet carriers are now explicitly excluded from the outdated 
+  stations list.
+
+## Fixed
+
+* explorationtools.py: Searching for a CMDR with public profile, but hidden 
+  activity will no longer error out.
+* explorationtools.py: Searching for a CMDR with public profile, but hidden 
+  flight log will no longer error out.
+
+-----
+
 # 0.6 (2020-07-18)
 
 ## Added
@@ -9,6 +25,8 @@
 
 * `spansh.py` old station search now outputs an age in days for the last update 
   instead of a time stamp.
+
+-----
 
 # 0.5 (2020-07-01)
 
@@ -22,9 +40,13 @@ See [KeepAChangelog](https://keepachangelog.com/en/1.0.0/).
   implemented thing is getting approximate coordinates for a given procedually 
   generated system name.
 
+-----
+
 # 0.4.1 (2020-06-18)
 
 * removed accidentally left over debug print code from `spansh.py`
+
+-----
 
 # 0.4 (2020-03-09)
 
