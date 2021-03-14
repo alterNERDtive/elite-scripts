@@ -23,7 +23,7 @@ def querystations(url, params):
 
 # ===========================================================================
 
-def getNearestSystem(coords):
+def getNearestSystem(coords, raw=False):
   params = {
       "x": coords[0],
       "y": coords[1],
@@ -34,6 +34,8 @@ def getNearestSystem(coords):
     raise ServerError(url, params)
 
   json = response.json()
+
+  if raw: return json
 
   ret = None
   system = json["system"]
@@ -49,7 +51,7 @@ def getNearestSystem(coords):
 
   return ret
 
-def getOldStations():
+def getOldStations(raw=False):
   params = {
       "json": JSON.dumps({
         "filters": FILTERS,
@@ -58,6 +60,8 @@ def getOldStations():
         })
       }
   json = querystations(APIURLS["stations"], params)
+
+  if raw: return json
 
   ret = ""
   for station in json["results"]:
@@ -69,7 +73,7 @@ def getOldStations():
 
   return ret[:-1]
 
-def getOldStationsInSystem(system):
+def getOldStationsInSystem(system, raw=False):
   FILTERS.update(system_name={"value": system})
   params = {
       "json": JSON.dumps({
@@ -78,6 +82,8 @@ def getOldStationsInSystem(system):
         })
       }
   json = querystations(APIURLS["stations"], params)
+
+  if raw: return json
 
   ret = ""
   # exclude carriers
@@ -96,7 +102,7 @@ def getOldStationsInSystem(system):
 
   return ret[:-1]
 
-def systemExists(system):
+def systemExists(system, raw=False):
   params = {
       "json": JSON.dumps({
         "filters": {
@@ -111,6 +117,9 @@ def systemExists(system):
     raise ServerError(url, params)
 
   json = response.json()
+
+  if raw: return json
+
   if json["count"] == 0:
     raise NotFoundError()
 
@@ -125,6 +134,8 @@ def systemExists(system):
 
 parser = argparse.ArgumentParser(description="Script for interfacing with "
     + "Spansh’s API.")
+parser.add_argument("--raw", action='store_true',
+    help="output raw json (mostly for debugging)")
 subparsers = parser.add_subparsers(title="subcommands", help="sub-command help",
     dest="subcommand", required=True)
 
@@ -187,11 +198,11 @@ try:
           }
         }
     if args.system:
-      out = getOldStationsInSystem(args.system)
+      out = getOldStationsInSystem(args.system, args.raw)
     else:
-      out = getOldStations()
+      out = getOldStations(args.raw)
   elif args.subcommand == "systemexists":
-    out = systemExists(args.system)
+    out = systemExists(args.system, args.raw)
 except ServerError as e:
   print(e)
   sys.exit(1)
