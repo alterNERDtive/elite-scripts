@@ -173,9 +173,9 @@ args = parser.parse_args()
 # ===========================================================================
 
 APIURLS = {
-    "nearest": "https://spansh.co.uk/api/nearest",
-    "stations": "https://spansh.co.uk/api/stations/search",
-    "systems": "https://spansh.co.uk/api/systems/search",
+    "nearest": "https://spansh.uk/api/nearest",
+    "stations": "https://spansh.uk/api/stations/search",
+    "systems": "https://spansh.uk/api/systems/search",
     }
 
 try:
