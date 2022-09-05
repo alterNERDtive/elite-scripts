@@ -12,12 +12,12 @@ docs:
 exe:
 	pip install --user --upgrade -r requirements.txt
 	pip install --user --upgrade -r pyEDSM\requirements.txt
-	python -OO -m PyInstaller --clean -yF edsm-getnearest.py
-	python -OO -m PyInstaller --clean -yF edts.py
-	python -OO -m PyInstaller --clean -yF explorationtools.py
-	python -OO -m PyInstaller --clean -yF spansh.py
+	pip install --user --upgrade pywin32-ctypes cffi
+	pip install --user --upgrade pyinstaller
+	python -m PyInstaller --clean -yF edsm-getnearest.py
+	python -m PyInstaller --clean -yF edts.py
+	python -m PyInstaller --clean -yF explorationtools.py
+	python -m PyInstaller --clean -yF spansh.py
 
-# probably won’t work unless you’re me :)
 release: clean
-	rsync -avz gezocks:/mnt/d/git/elite-scripts/dist/ build/
-	cd build && zip -r ../$(zipfile) *
+	pwsh -Command "Compress-Archive -Path .\dist\*.exe elite-scripts.zip"
