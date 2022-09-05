@@ -86,11 +86,9 @@ def getOldStationsInSystem(system, raw=False):
   if raw: return json
 
   ret = ""
-  # exclude carriers
-  stations = list(filter(lambda station: not station["type"] == "Drake-Class Carrier", json["results"]))
-  if len(stations) == 0:
+  if len(json["results"]) == 0:
     raise NotFoundError()
-  for station in stations:
+  for station in json["results"]:
     # systems including the given name as a word will also trigger;
     # looking for e.g. “Mari” will also give you stuff in “Mac Mari”!
     if station["system_name"] == system:
@@ -161,6 +159,8 @@ parser_oldstations.add_argument("--minage", nargs="?", type=int, default=365,
     + "365 (= 1 year).")
 parser_oldstations.add_argument("--short", action='store_true',
     help="short output format (system/station names only)")
+parser_oldstations.add_argument("--nofeet", action='store_true',
+    help="omit Odyssey settlements")
 
 parser_systemexists = subparsers.add_parser("systemexists",
     help="Checks if a given system exists in the search database.")
@@ -188,15 +188,29 @@ try:
           "value": [
             "2017-11-06",
             (datetime.now() - timedelta(days=args.minage)).strftime("%Y-%m-%d")
-            ],
+          ],
           "comparison": "<=>"
-          }
+        },
+        "type":
+        {
+          "value": [
+            "Asteroid base",
+            "Coriolis Starport",
+            "Mega ship",
+            "Ocellus Starport",
+            "Orbis Starport",
+            "Outpost",
+            "Planetary Outpost",
+            "Planetary Port",
+            "Settlement" if not args.nofeet else ""
+          ]
         }
+      }
     SORT = {
         "updated_at": {
           "direction": "asc"
-          }
         }
+      }
     if args.system:
       out = getOldStationsInSystem(args.system, args.raw)
     else:

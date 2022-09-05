@@ -1,15 +1,29 @@
+# devel
+
+## Added
+
+* `spansh.py`: `--raw` option. Prints the raw JSON returned from a query.
+* `spansh.py`: `--nofeet` option for `outdatedstations`. Excludes Odyssey 
+  settlements from the result set.
+
+## Changed
+
+* `spansh.py`: Now uses <https://spansh.uk> instead of <https://spansh.co.uk>.
+
+-----
+
 # 0.7 (2021-01-28)
 
 ## Changed
 
-* spansh.py: Fleet carriers are now explicitly excluded from the outdated 
+* `spansh.py`: Fleet carriers are now explicitly excluded from the outdated 
   stations list.
 
 ## Fixed
 
-* explorationtools.py: Searching for a CMDR with public profile, but hidden 
+* `explorationtools.py`: Searching for a CMDR with public profile, but hidden 
   activity will no longer error out.
-* explorationtools.py: Searching for a CMDR with public profile, but hidden 
+* `explorationtools.py`: Searching for a CMDR with public profile, but hidden 
   flight log will no longer error out.
 
 -----

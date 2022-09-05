@@ -36,7 +36,7 @@ positional arguments:
   CMDR             a list of CMDR names (must have their location public on
                    EDSM!)
 
-optional arguments:
+options:
   -h, --help       show this help message and exit
   --system SYSTEM  the target system (must be in EDDN!)
   --short          short output (only makes sense with `--text`)
@@ -51,7 +51,7 @@ usage: edts.py [-h] {coords} ...
 
 Script for interfacing with Alot’s hosted EDTS API.
 
-optional arguments:
+options:
   -h, --help  show this help message and exit
 
 subcommands:
@@ -66,7 +66,7 @@ usage: edts.py coords [-h] [--maxuncertainty [MAXUNCERTAINTY]] system
 positional arguments:
   system                the system name to get coordinates for
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   --maxuncertainty [MAXUNCERTAINTY]
                         maximum accepted uncertainty, if any
@@ -81,7 +81,7 @@ usage: explorationtools.py [-h]
 
 A collection of tools useful for exploration.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
 
 subcommands:
@@ -111,7 +111,7 @@ usage: explorationtools.py bodycount [-h] system
 positional arguments:
   system      system to query
 
-optional arguments:
+options:
   -h, --help  show this help message and exit
 ```
 
@@ -122,7 +122,7 @@ usage: explorationtools.py distancebetween [-h] [--roundto [ROUNDTO]]
 positional arguments:
   system               the systems to measure
 
-optional arguments:
+options:
   -h, --help           show this help message and exit
   --roundto [ROUNDTO]  the number of digits to round to (default: 2)
 ```
@@ -135,7 +135,7 @@ positional arguments:
   name        the commander in question
   apikey      the commander’s EDSM API key. Can be empty for public profiles.
 
-optional arguments:
+options:
   -h, --help  show this help message and exit
   --system    output the commander’s last known system (default)
   --coords    output the commander’s last known position in {x,y,z}
@@ -149,7 +149,7 @@ usage: explorationtools.py findsystem [-h] system
 positional arguments:
   system      the system in question
 
-optional arguments:
+options:
   -h, --help  show this help message and exit
 ```
 
@@ -159,19 +159,20 @@ usage: explorationtools.py systemlist [-h] partialsystem
 positional arguments:
   partialsystem  the partial system name to query against
 
-optional arguments:
+options:
   -h, --help     show this help message and exit
 ```
 
 ### spansh.py ###
 
 ```
-usage: spansh.py [-h] {nearestsystem,oldstations,systemexists} ...
+usage: spansh.py [-h] [--raw] {nearestsystem,oldstations,systemexists} ...
 
 Script for interfacing with Spansh’s API.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
+  --raw                 output raw json (mostly for debugging)
 
 subcommands:
   {nearestsystem,oldstations,systemexists}
@@ -191,7 +192,7 @@ usage: spansh.py nearestsystem [-h] [--short | --parsable]
 positional arguments:
   coordinate  the coordinates to search for (order: x, y, z)
 
-optional arguments:
+options:
   -h, --help  show this help message and exit
   --short     short output format (system name only)
   --parsable  parsable output format (<name>|<x>,<y>,<z>|<distance>)
@@ -199,9 +200,9 @@ optional arguments:
 
 ```
 usage: spansh.py oldstations [-h] [--system [SYSTEM]] [--count [COUNT]]
-                             [--minage [MINAGE]] [--short]
+                             [--minage [MINAGE]] [--short] [--nofeet]
 
-optional arguments:
+options:
   -h, --help         show this help message and exit
   --system [SYSTEM]  a single system to query. If not present, get the oldest
                      stations overall.
@@ -209,6 +210,7 @@ optional arguments:
   --minage [MINAGE]  minimum age of data (in days) to be considered
                      “outdated”. Defaults to 365 (= 1 year).
   --short            short output format (system/station names only)
+  --nofeet           omit Odyssey settlements
 ```
 
 ```
@@ -217,7 +219,7 @@ usage: spansh.py systemexists [-h] system
 positional arguments:
   system      the system to search for
 
-optional arguments:
+options:
   -h, --help  show this help message and exit
 ```
 
