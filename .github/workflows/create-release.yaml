@@ -1,0 +1,35 @@
+﻿name: Create release on tag push
+
+on:
+  push:
+    tags:
+      - 'release/*'
+
+jobs:
+  build:
+    name: Pre-compile for Windows
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Make exe
+        run: make exe
+
+      - name: Create .zip archive
+        run: make release
+
+      - name: Draft release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "elite-scripts.zip"
+          bodyFile: "CHANGELOG.md"
+          draft: true
