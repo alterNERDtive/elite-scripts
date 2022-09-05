@@ -201,6 +201,8 @@ try:
       out = getOldStationsInSystem(args.system, args.raw)
     else:
       out = getOldStations(args.raw)
+    if args.raw:
+      out = JSON.dumps(out, indent=2)
   elif args.subcommand == "systemexists":
     out = systemExists(args.system, args.raw)
 except ServerError as e:
